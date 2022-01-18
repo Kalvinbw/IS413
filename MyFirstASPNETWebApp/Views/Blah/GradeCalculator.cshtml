@@ -8,7 +8,7 @@
 @model GradeCalculatorModel;
 
 <h2>Grade Calculator</h2>
-<form method="post">
+<form method="post" id="form1">
     <label>Assignments: </label>
     <input id="assign" asp-for="Assign" /> <br />
 
@@ -24,9 +24,11 @@
     <label>INTEX: </label>
     <input id="intex" asp-for="Intex" /> <br />
 
-    <button id="btnsend" type="submit" value="Check Grade" />
+    <input id="btnsend" type="submit" value="Check Grade" form="form1">
+
 
     <div asp-validation-summary="All" class="text-danger"></div>
 </form>
+
 
 
