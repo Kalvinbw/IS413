@@ -13,9 +13,12 @@ namespace mission4.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        private MovieFormContext _movieContext { get; set; }
+
+        public HomeController(ILogger<HomeController> logger, MovieFormContext mfc)
         {
             _logger = logger;
+            _movieContext = mfc;
         }
 
         public IActionResult Index()
@@ -32,6 +35,9 @@ namespace mission4.Controllers
         [HttpPost]
         public IActionResult MovieForm(MovieForm mf)
         {
+            _movieContext.Add(mf);
+            _movieContext.SaveChanges();
+
             return View("Confirmation", mf);
         }
 

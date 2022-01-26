@@ -31,6 +31,7 @@
 
         <label asp-for="Edited"></label>
         <select asp-for="Edited">
+            <option value=""></option>
             <option value="true">Yes</option>
             <option value="false">No</option>
         </select><br />
@@ -38,7 +39,7 @@
         <label asp-for="LentTo">Lent To: </label>
         <input asp-for="LentTo" /><br />
 
-        <label asp-for="Notes">Lent To: </label>
+        <label asp-for="Notes">Notes: </label>
         <input type="text" asp-for="Notes" /><br />
 
         <button type="submit">Submit Movie</button>
