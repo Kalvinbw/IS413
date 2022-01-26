@@ -23,6 +23,18 @@ namespace mission4.Controllers
             return View();
         }
 
+        [HttpGet]
+        public IActionResult MovieForm()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult MovieForm(MovieForm mf)
+        {
+            return View("Confirmation", mf);
+        }
+
         public IActionResult Privacy()
         {
             return View();
