@@ -35,6 +35,10 @@ namespace mission4.Controllers
         [HttpPost]
         public IActionResult MovieForm(MovieForm mf)
         {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
             _movieContext.Add(mf);
             _movieContext.SaveChanges();
 

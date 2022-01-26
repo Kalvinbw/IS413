@@ -9,19 +9,19 @@ namespace mission4.Models
         [Required]
         public int MovieId { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "A Category is required")]
         public string Category { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "A Title is required")]
         public string Title { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "A Year is required")]
         public ushort Year { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "A Director is required")]
         public string Director { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "A Rating is required")]
         public string Rating { get; set; }
 
         public bool Edited { get; set; }
