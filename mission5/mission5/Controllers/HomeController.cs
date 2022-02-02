@@ -45,6 +45,15 @@ namespace mission4.Controllers
             return View("Confirmation", mf);
         }
 
+        [HttpGet]
+        public IActionResult MovieList()
+        {
+            var movies = _movieContext.Responses.Find();
+
+            return View();
+        }
+
+
         public IActionResult Privacy()
         {
             return View();
