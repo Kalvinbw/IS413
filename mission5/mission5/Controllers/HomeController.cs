@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using mission4.Models;
 
@@ -48,7 +49,11 @@ namespace mission4.Controllers
         [HttpGet]
         public IActionResult MovieList()
         {
-            var movies = _movieContext.Responses.Find();
+            var movies = _movieContext.Responses
+                    .Include(x => x.Major)
+                    .Where(x => x.CreeperStalker == false)
+                    .OrderBy(x => x.LastName)
+                    .ToList();
 
             return View();
         }
