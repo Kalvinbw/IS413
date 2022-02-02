@@ -14,6 +14,7 @@ namespace mission4.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
+        // Create the context object
         private MovieFormContext _movieContext { get; set; }
 
         public HomeController(ILogger<HomeController> logger, MovieFormContext mfc)
@@ -22,40 +23,92 @@ namespace mission4.Controllers
             _movieContext = mfc;
         }
 
+        // Index page view
         public IActionResult Index()
         {
             return View();
         }
 
+        // Get the blank movie form
         [HttpGet]
         public IActionResult MovieForm()
         {
+            // Get a list of categories for the dropdown
+            ViewBag.Categories = _movieContext.Categories.ToList();
+
             return View();
         }
 
         [HttpPost]
         public IActionResult MovieForm(MovieForm mf)
         {
+            // Return page if invalid form
             if (!ModelState.IsValid)
             {
+                ViewBag.Categories = _movieContext.Categories.ToList();
+
                 return View();
             }
+
+            // Save the movie to the DB
             _movieContext.Add(mf);
             _movieContext.SaveChanges();
 
             return View("Confirmation", mf);
         }
 
+        // Get the movie list
         [HttpGet]
         public IActionResult MovieList()
         {
+            // Get a list of movies and order them by Title
             var movies = _movieContext.Responses
-                    .Include(x => x.Major)
-                    .Where(x => x.CreeperStalker == false)
-                    .OrderBy(x => x.LastName)
+                    .Include(x => x.Category)
+                    .OrderBy(x => x.Title)
                     .ToList();
 
-            return View();
+            return View(movies);
+        }
+
+        // Edit a movie
+        [HttpGet]
+        public IActionResult Edit(int movieid)
+        {
+            // Fill the form with the movie data
+            ViewBag.Categories = _movieContext.Categories.ToList();
+
+            var movie = _movieContext.Responses.Single(x => x.MovieId == movieid);
+
+            return View("MovieForm", movie);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(MovieForm mf)
+        {
+            // Save the new data
+            _movieContext.Update(mf);
+            _movieContext.SaveChanges();
+
+            return RedirectToAction("MovieList");
+        }
+
+        // Delete a movie
+        [HttpGet]
+        public IActionResult Delete(int movieid)
+        {
+            var movie = _movieContext.Responses.Single(x => x.MovieId == movieid);
+
+            return View(movie);
+        }
+
+        [HttpPost]
+        public IActionResult Delete(MovieForm mf)
+        {
+            // Delete from DB
+            _movieContext.Responses.Remove(mf);
+            _movieContext.SaveChanges();
+
+            return RedirectToAction("MovieList");
         }
 
 
